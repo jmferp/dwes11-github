@@ -1,7 +1,6 @@
 # pruebaGit11
 
-Pablo Villar
-
+PropuestaPHP
 
 almacenar los proyectos de este módulo profesional.
 
