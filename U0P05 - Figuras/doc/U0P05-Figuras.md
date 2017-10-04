@@ -1,6 +1,6 @@
 ##### *Desarrollo Web en Entorno Servidor - Curso 2017/2018 - IES Leonardo Da Vinci - Alberto Ruiz*
 ## U0P05 - Figuras
-#### Entrega de: *pon aquí tu nombre*
+#### Entrega de: *Jose Maria Fernandez Parra*
 ----
 
 #### 1. Descripción:
@@ -24,16 +24,147 @@ Crea un paquete llamado `figuras` y codifica las clases Cuadrado, Triangulo y Ci
 ##### Código de la clase Cuadrado:
 
 ```java
-System.out.println("Ejemplo de bloque de código");
+public class Cuadrado {
+	private double lado;
+
+	public Cuadrado(double lado) {
+		this.lado=lado;
+	}
+
+	public double getLado() {
+		return lado;
+	}
+
+	public void setLado(double lado) {
+		this.lado = lado;
+	}
+	
+	public double area(){
+		return this.getLado()*this.getLado();
+	}
+	
+	public double perimetro() {
+		return this.getLado()*4;
+	}
+
+	@Override
+	public String toString() {
+		return "Cuadrado [lado=" + lado + "]";
+	}
+}
 ```
 
 ##### Código de la clase Triángulo:
 
+
+
+```java
+public class Triangulo {
+    private double base;
+    private double altura;
+
+    public Triangulo(double base,double altura) {
+        this.base=base;
+        this.altura=altura;
+    }
+
+    public double getBase() {
+        return base;
+    }
+    public void setBase(double base) {
+        this.base = base;
+    }
+    public double getAltura() {
+        return altura;
+    }
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+
+    public double area() {
+        return this.getBase()*this.getAltura()/2;
+    }
+    @Override
+    public String toString() {
+        return "Triangulo [base=" + base + ", altura=" + altura + "]";
+    }
+}
+```
+
+
 ##### Código de la clase Circunferencia:
+
+
+
+
+```java
+public class Circunferencia {
+private double radio;
+public Circunferencia(double radio) {
+	this.radio=radio;
+}
+
+public double getRadio() {
+	return radio;
+}
+
+public void setRadio(double radio) {
+	this.radio = radio;
+}
+
+@Override
+public String toString() {
+	return "Circunferencia [radio=" + radio + "]";
+}
+}
+```
+
+
+
 
 ##### Código del método main en la clase Problema:
 
+
+​		
+
+```java
+public static void main(String[] args) {
+	Circunferencia cir1=new Circunferencia(4.8);
+	Circunferencia cir2=new Circunferencia(1.5);
+	Cuadrado cua1=new Cuadrado(4.2);
+	Triangulo tri1=new Triangulo(8,15);
+	
+	System.out.println("El area es "+area(cir1,cir2,cua1,tri1));
+	System.out.println("El perimetro es "+perimetro(cir1,cir2,cua1,tri1));
+		
+}
+
+public static double area(Circunferencia cir1,Circunferencia cir2,Cuadrado cua1,Triangulo tri1) {
+	double aCir1=(Math.PI*Math.pow(cir1.getRadio(), 2))/2;
+	double aCir2=(Math.PI*Math.pow(cir2.getRadio(), 2))*3/4;
+	double aCua1=cua1.getLado()*cua1.getLado();
+	double aTri1=(tri1.getAltura()*tri1.getBase())/2;
+	return aCir1+aCir2+aCua1+aTri1;
+}
+
+public static double perimetro(Circunferencia cir1,Circunferencia cir2,Cuadrado cua1,Triangulo tri1) {
+	double pCir1=Math.PI*cir1.getRadio();
+	double pCir2=(2*Math.PI*cir2.getRadio()*3)/4;
+	double pCua1=cua1.getLado()*3;
+	double pTri1=(tri1.getBase()-cir2.getRadio())+(tri1.getAltura()-cir2.getRadio()-cua1.getLado())+(Math.sqrt(Math.pow(tri1.getBase(), 2)+(Math.pow(tri1.getAltura(), 2)))-cir1.getRadio()*2);
+	return pCir1+pCir2+pCua1+pTri1; 
+}
+```
+
+
 ##### Ejecución del método main:
+
+```java
+El area es 119.13258497228719
+El perimetro es 57.94822820780804
+```
+
+
 
 #### Parte 2: Herencia
 
@@ -47,11 +178,92 @@ Queremos que todas las figuras tengan un título y un color. Para el color puede
 
 ##### Código de la clase Figura:
 
+```java
+public abstract class Figura {
+private String titulo;
+private Color color;
+
+public String getTitulo() {
+	return titulo;
+}
+public void setTitulo(String titulo) {
+	this.titulo = titulo;
+}
+public Color getColor() {
+	return color;
+}
+public void setColor(Color color) {
+	this.color = color;
+}
+
+@Override
+	public String toString() {
+		return "Figura [titulo=" + titulo + ", color=" + color + "]";
+	}
+	public abstract double area();
+	public abstract double perimetro();
+}
+```
+
 ##### Código de la clase Cuadrado una vez modificada:
 
+
+```java
+public class Cuadrado extends Figura {
+private double lado;
+public Cuadrado(String titulo,Color color,double lado) {
+	super.setTitulo(titulo);
+	super.setColor(color);
+	this.lado=lado;
+}
+
+public double getLado() {
+	return lado;
+}
+
+public void setLado(double lado) {
+	this.lado = lado;
+}
+
+public double area(){
+	return this.getLado()*this.getLado();
+}
+
+public double perimetro() {
+	return this.getLado()*4;
+}
+
+@Override
+public String toString() {
+	return "Cuadrado [lado=" + lado + ", getTitulo()=" + getTitulo() + ", getColor()=" + getColor() + "]";
+}
+```
 ##### Código del método main en la clase Principal:
 
+```java
+public static void main(String[] args) {
+	Circunferencia cir1=new Circunferencia("Circulo 1",Color.Amarillo,4.8);
+	Circunferencia cir2=new Circunferencia("Circulo 2",Color.Verde,1.5);
+	Cuadrado cua1=new Cuadrado("Cuadrado",Color.Negro,4.2);
+	Triangulo tri1=new Triangulo("Triangulo",Color.Rojo,8,15);
+	
+	System.out.println(tri1.toString());
+	System.out.println(cir1.toString());
+	System.out.println(cir2.toString());
+	System.out.println(cua1.toString());
+
+}
+```
 ##### Ejecución del método main:
+
+```java
+Triangulo [base=8.0, altura=15.0, getTitulo()=Triangulo, getColor()=Rojo]
+Circunferencia [radio=4.8, getTitulo()=Circulo 1, getColor()=Amarillo]
+Circunferencia [radio=1.5, getTitulo()=Circulo 2, getColor()=Verde]
+Cuadrado [lado=4.2, getTitulo()=Cuadrado, getColor()=Negro]
+```
+
+
 
 #### Parte 3: Colecciones
 

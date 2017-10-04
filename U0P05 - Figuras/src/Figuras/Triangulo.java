@@ -1,10 +1,12 @@
 package Figuras;
 
-public class Triangulo {
+public class Triangulo extends Figura {
 	private double base;
 	private double altura;
 	
-	public Triangulo(double base,double altura) {
+	public Triangulo(String titulo,Color color,double base,double altura) {
+		super.setTitulo(titulo);
+		super.setColor(color);
 		this.base=base;
 		this.altura=altura;
 	}
@@ -25,9 +27,15 @@ public class Triangulo {
 	public double area() {
 		return this.getBase()*this.getAltura()/2;
 	}
+	
+	public double perimetro() {
+		return (Math.sqrt(Math.pow(this.getBase(), 2)+(Math.pow(this.getAltura(), 2))));
+	}
+
 	@Override
 	public String toString() {
-		return "Triangulo [base=" + base + ", altura=" + altura + "]";
+		return "Triangulo [base=" + base + ", altura=" + altura + ", getTitulo()=" + getTitulo() + ", getColor()="
+				+ getColor() + "]";
 	}
 	
 	
