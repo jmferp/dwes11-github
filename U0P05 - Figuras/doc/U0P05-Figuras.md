@@ -278,6 +278,88 @@ Cuadrado [lado=4.2, getTitulo()=Cuadrado, getColor()=Negro]
 
 ##### Código de la clase GestorFiguras:
 
+
+```java
+public class GestorFiguras{
+private ArrayList<Figura> arFig;
+
+public GestorFiguras() {
+	this.arFig= new ArrayList<Figura>();
+}
+
+public void anadirFigura(Figura fig) {
+	boolean enc=false;
+	for(int i=0;i<arFig.size();i++) {
+		if(arFig.get(i).getTitulo().equalsIgnoreCase(fig.getTitulo())) {
+			enc=true;
+		}
+	}
+	if(!enc) {
+	arFig.add(fig);
+	}
+}
+
+public void eliminarFigura(String tit) {
+	for(int i=0;i<arFig.size();i++) {
+		if(arFig.get(i).getTitulo().equalsIgnoreCase(tit)) {
+			arFig.remove(i);
+		}
+	}
+}
+
+public void mostrarFiguras() {
+	for(int i=0;i<arFig.size();i++) {
+		System.out.println(arFig.get(i).toString());;
+	}
+	
+}
+
+public double calcularSumatorioAreas(){
+	double suma=0;
+	for(int i=0;i<arFig.size();i++) {
+		suma=suma+(arFig.get(i).area());
+	}
+	return suma;
+}
+```
 ##### Código del método main en la clase Principal:
 
+
+
+```java
+public static void main(String[] args) {
+	Circunferencia cir1=new Circunferencia("Circulo 1",Color.Amarillo,4.8);
+	Circunferencia cir2=new Circunferencia("Circulo 2",Color.Verde,1.5);
+	Cuadrado cua1=new Cuadrado("Cuadrado",Color.Negro,4.2);
+	Triangulo tri1=new Triangulo("Triangulo",Color.Rojo,8,15);
+
+	GestorFiguras gestor=new GestorFiguras();
+	gestor.anadirFigura(cir1);
+	gestor.anadirFigura(cir2);
+	gestor.anadirFigura(cua1);
+	gestor.anadirFigura(tri1);
+	System.out.println("Mostrar todas las figuras");
+	gestor.mostrarFiguras();
+	gestor.eliminarFigura("Circulo 2");
+	System.out.println("Eliminando circulo 2");
+	gestor.mostrarFiguras();
+	System.out.println("Sumatorio areas "+gestor.calcularSumatorioAreas());
+}
+```
+
+
 ##### Ejecución del método main:
+
+```java
+Mostrar todas las figuras
+Circunferencia [radio=4.8, getTitulo()=Circulo 1, getColor()=Amarillo]
+Circunferencia [radio=1.5, getTitulo()=Circulo 2, getColor()=Verde]
+Cuadrado [lado=4.2, getTitulo()=Cuadrado, getColor()=Negro]
+Triangulo [base=8.0, altura=15.0, getTitulo()=Triangulo, getColor()=Rojo]
+Eliminando circulo 2
+Circunferencia [radio=4.8, getTitulo()=Circulo 1, getColor()=Amarillo]
+Cuadrado [lado=4.2, getTitulo()=Cuadrado, getColor()=Negro]
+Triangulo [base=8.0, altura=15.0, getTitulo()=Triangulo, getColor()=Rojo]
+Sumatorio areas 150.02229473870884
+```
+
