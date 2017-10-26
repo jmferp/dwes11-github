@@ -238,3 +238,4 @@ Crea un proyecto *U2P02-PHP* y codifica un programa PHP en el que incluyas ejemp
   ?>
   ```
 
+
