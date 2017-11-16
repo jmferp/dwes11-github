@@ -1,37 +1,35 @@
 <?php
-if(session_status() == PHP_SESSION_NONE) {
-    session_name('idSesion11');
-    session_start();
-}
-    
-    if (isset($_REQUEST["reiniciarContador"])) {
-        unset($_SESSION["contador"]);
-    }
-    if (isset($_REQUEST["cerrarSesion"])) {
-        $_SESSION=array();
-        session_unset();
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
-                );
-        }
-        session_destroy();
-    }
-    
-    if(session_status() == PHP_SESSION_NONE)
-        $mensaje = "No hay sesión iniciada";
-        else {
-            if(isset( $_SESSION['contador'])){
-                $_SESSION['contador']+= 1;
-            }else{
-                $_SESSION['contador']=1;
-                $mensaje = "Has visitado esta página ". $_SESSION['contador']." veces en esta sesión.";
-            }
-        }
 
-?>
+if (session_status () == PHP_SESSION_NONE){
+    session_name('idsesionname');
+    session_start ();
+    $mensaje="Sesion no iniciada";
+}
+
+if(isset($_POST['enviar'])){
+   if(!empty($_POST['nombre'])){
+       $_SESSION['name']=$_POST['nombre'];
+       $mensaje="Damos la bienvenida a ".$_SESSION['name'];
+   }else{
+       $mensaje="Sesion no iniciada";
+ }
+}
+
+
+if (isset($_REQUEST["cerrarSesion"])) {
+    $_SESSION=array();
+    session_unset();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+            );
+    }
+    session_destroy();
+}
+
+ ?>
 <html>
 <head>
 <title>Sesiones</title>
@@ -40,10 +38,10 @@ if(session_status() == PHP_SESSION_NONE) {
 <body>
 <h3><?php echo $mensaje;?></h3>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-	Contador:<input type="number" name="cont">
-	<input type="submit" name="enviar">
-	</form>
-<p><a href="<?php echo $_SERVER['PHP_SELF']?>">Recargar la página</a></p>
-<p><a href="<?php echo $_SERVER['PHP_SELF']."?reiniciarContador=true"?>">Reiniciar contador</a></p>
+	Nombre:<input type="text" name="nombre">
+    <input type="submit" name="enviar">
+	</form> 
 <p><a href="<?php echo $_SERVER['PHP_SELF']."?cerrarSesion=true"?>">Cerrar sesión</a></p>
-</body></html>
+
+</body>
+</html>
