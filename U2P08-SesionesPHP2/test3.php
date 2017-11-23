@@ -9,8 +9,8 @@ if (!isset($_SESSION['name'])){
     if(isset($_POST['enviar'])){
         session_name('idsesion11');
         session_start ();
-        $_SESSION['test3']=$_POST['respuesta'];
-        if($_SESSION['test3']=="ok"){
+        $_SESSION['test3']=$_POST['res3'];
+        if($_SESSION['test3']=="Sierra"){
             $_SESSION['acierto']+=1;
         }else{
             $_SESSION['fallo']+=1;
@@ -27,7 +27,10 @@ if (!isset($_SESSION['name'])){
 </head>
 <body>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-	Pregunta:<input type="text" name="respuesta">
+	<p>¿Quien es el premio Planeta del año 2017?</p>
+	<input type="radio" value="Cristina" name="res3">Cristina Lopez Barrio
+	<input type="radio" value="Sierra" name="res3">Javier Sierra
+	<input type="radio" value="Redondo" name="res3">Dolores Redondo
     <input type="submit" name="enviar">
 	</form> 
 </body>

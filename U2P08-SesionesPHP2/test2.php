@@ -9,8 +9,8 @@ if (!isset($_SESSION['name'])){
     if(isset($_POST['enviar'])){
         session_name('idsesion11');
         session_start ();
-        $_SESSION['test2']=$_POST['respuesta'];
-        if($_SESSION['test2']=="ok"){
+        $_SESSION['test2']=$_POST['res2'];
+        if($_SESSION['test2']=="Thriller"){
             $_SESSION['acierto']+=1;
         }else{
             $_SESSION['fallo']+=1;
@@ -29,7 +29,10 @@ if (!isset($_SESSION['name'])){
 </head>
 <body>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-	Pregunta:<input type="text" name="respuesta">
+	<p>¿Cual es el disco mas vendido de Michael Jackson?</p>
+	<input type="radio" value="Bad" name="res2">Bad
+	<input type="radio" value="Thriller" name="res2">Thriller
+	<input type="radio" value="Dangerous" name="res2">Dangerous
     <input type="submit" name="enviar">
 	</form> 
 </body>
