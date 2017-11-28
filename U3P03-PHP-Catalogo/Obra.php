@@ -7,6 +7,7 @@ class Obra{
     private $descripcion;
     private $año;
     private $imagen;
+    private $nombre;
     /**
      * @return mixed
      */
@@ -118,6 +119,25 @@ class Obra{
     {
         $this->imagen = $imagen;
     }
+    /**
+     * @return mixed
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * @param mixed $nombre
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    
+    
+    
 
     
     

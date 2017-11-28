@@ -22,8 +22,8 @@ echo "<p>A continuación mostramos algunos registros:</p>";
 ?>
 <table style='border:0'>
 <tr style='background-color:lightblue'>
-<th>ID</th>
 <th>Nombre</th>
+<th>Imagen</th>
 </tr>
 <?php
 $ruta="img/";
@@ -32,8 +32,8 @@ $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id
 if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
 while ($obra = $resultado->fetch_object('Obra')) {
     echo "<tr bgcolor='lightgreen'>";
-    echo "<td>".$obra->getId_autor()."</td>\n";
     echo "<td>".$obra->getNombre()."</td>\n";
+    echo "<td><img src='$ruta".$obra->getImagen()."' width=100 heigh=100></td>\n";
     echo "</tr>";
     
 }
