@@ -22,17 +22,30 @@ echo "<p>A continuación mostramos algunos registros:</p>";
 ?>
 <table style='border:0'>
 <tr style='background-color:lightblue'>
-<th>ID</th>
-<th>Nombre</th>
+<th>ID Obra<a href=mostrarCatalogo.php?op=1>&#9650;</a><a href=mostrarCatalogo.php?op=2>&#9660;</a></th>
+<th>ID Autor</th>
+<th>Titulo</th>
+<th>Autor</th>
 </tr>
 <?php
 $ruta="img/";
-$resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY nombre");
+if (!isset($_REQUEST["op"])) die (header("location:mostrarCatalogo.php?op=1"));
+$op = $_REQUEST["op"];
+if($op==1){
+    $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY id_obra");
+}elseif ($op==2){
+    $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY id_obra DESC");
+}
+    
+//$resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY id_obra");
+
 //$resultado = $conexion -> query("SELECT distinct id_autor FROM obra,autor WHERE obra.id_autor=autor.id ORDER BY id_autor");
 if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
 while ($obra = $resultado->fetch_object('Obra')) {
     echo "<tr bgcolor='lightgreen'>";
-    echo "<td>".$obra->getId_autor()."</td>\n";
+    echo "<td><a href='mostrarObra.php?id_obra=".$obra->getId_obra()."'>".$obra->getId_obra()."</a></td>\n";
+    echo "<td>".$obra->getId_autor()."</a></td>\n";
+    echo "<td>".$obra->getTitulo()."</td>\n";
     echo "<td>".$obra->getNombre()."</td>\n";
     echo "</tr>";
     
