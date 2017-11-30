@@ -8,6 +8,23 @@ class Obra{
     private $año;
     private $imagen;
     private $nombre;
+    private $nacionalidad;
+    /**
+     * @return mixed
+     */
+    public function getNacionalidad()
+    {
+        return $this->nacionalidad;
+    }
+
+    /**
+     * @param mixed $nacionalidad
+     */
+    public function setNacionalidad($nacionalidad)
+    {
+        $this->nacionalidad = $nacionalidad;
+    }
+
     /**
      * @return mixed
      */
