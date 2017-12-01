@@ -1,22 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.2.7.1
+-- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2017 a las 11:48:55
--- Versión del servidor: 10.1.26-MariaDB
--- Versión de PHP: 7.1.9
+-- Tiempo de generación: 01-12-2017 a las 22:16:41
+-- Versión del servidor: 5.5.39
+-- Versión de PHP: 5.4.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `catalogo11`
@@ -30,23 +28,24 @@ USE `catalogo11`;
 -- Estructura de tabla para la tabla `autor`
 --
 
-CREATE TABLE `autor` (
+CREATE TABLE IF NOT EXISTS `autor` (
   `id` varchar(10) COLLATE utf8mb4_spanish_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `nacionalidad` varchar(50) COLLATE utf8mb4_spanish_ci DEFAULT NULL
+  `nacionalidad` varchar(50) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `imag` text COLLATE utf8mb4_spanish_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `autor`
 --
 
-INSERT INTO `autor` (`id`, `nombre`, `nacionalidad`) VALUES
-('1', 'Ken Follet', 'Reino Unido'),
-('2', 'JK Rowling', 'Reino Unido'),
-('3', 'Javier Sierra', 'España'),
-('4', 'JRR Tolkien', 'Sudafrica'),
-('5', 'Miguel de Cervantes', 'España'),
-('6', 'Dan Brown', 'Estados Unidos');
+INSERT INTO `autor` (`id`, `nombre`, `nacionalidad`, `imag`) VALUES
+('1', 'Ken Follett', 'Reino Unido', 'follett.jpg'),
+('2', 'JK Rowling', 'Reino Unido', 'rowling.jpg'),
+('3', 'Javier Sierra', 'España', 'sierra.jpg'),
+('4', 'JRR Tolkien', 'Sudafrica', 'tolkien.jpg'),
+('5', 'Miguel de Cervantes', 'España', 'cervantes.jpg'),
+('6', 'Dan Brown', 'Estados Unidos', 'brown.jpg');
 
 -- --------------------------------------------------------
 
@@ -54,7 +53,7 @@ INSERT INTO `autor` (`id`, `nombre`, `nacionalidad`) VALUES
 -- Estructura de tabla para la tabla `obra`
 --
 
-CREATE TABLE `obra` (
+CREATE TABLE IF NOT EXISTS `obra` (
   `id_obra` varchar(10) COLLATE utf8mb4_spanish_ci NOT NULL,
   `titulo` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
   `id_autor` varchar(10) COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -69,13 +68,14 @@ CREATE TABLE `obra` (
 --
 
 INSERT INTO `obra` (`id_obra`, `titulo`, `id_autor`, `genero`, `descripcion`, `año`, `imagen`) VALUES
-('O1', 'Los pilares de la tierra', '1', 'historica', NULL, 1989, ''),
-('O2', 'Harry Potter', '2', 'Ciencia Ficcion Juvenil', NULL, NULL, NULL),
+('O1', 'Los pilares de la tierra', '1', 'historica', NULL, 1989, 'pilares.jpg'),
+('O2', 'Harry Potter y el cáliz de fuego', '2', 'Ciencia Ficcion', NULL, 2000, 'potter.jpg'),
 ('O3', 'El codigo Da Vinci', '6', 'Novela', NULL, 2003, 'davinci.jpg'),
 ('O4', 'Inferno', '6', 'Novela', NULL, 2013, 'inferno.jpg'),
-('O5', 'La cena secreta', '3', NULL, NULL, 2004, 'cenasecreta.jpg'),
+('O5', 'La cena secreta', '3', 'Novela', NULL, 2004, 'cenasecreta.jpg'),
 ('O6', 'El hobbit', '4', 'Ciencia ficcion', NULL, 1937, 'hobbit.jpg'),
-('O7', 'El señor de los anillos', '4', 'Ciencia ficcion', NULL, 1954, 'anillos.jpg');
+('O7', 'El señor de los anillos', '4', 'Ciencia ficcion', NULL, 1954, 'anillos.jpg'),
+('O8', 'Don Quijote de la Mancha', '5', 'Novela', NULL, NULL, 'quijote.jpg');
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,7 @@ INSERT INTO `obra` (`id_obra`, `titulo`, `id_autor`, `genero`, `descripcion`, `a
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE IF NOT EXISTS `usuario` (
   `login` varchar(10) COLLATE utf8mb4_spanish_ci NOT NULL,
   `password` varchar(15) COLLATE utf8mb4_spanish_ci NOT NULL,
   `nombre` varchar(25) COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -107,20 +107,19 @@ INSERT INTO `usuario` (`login`, `password`, `nombre`, `admin`, `descripcion`) VA
 -- Indices de la tabla `autor`
 --
 ALTER TABLE `autor`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `obra`
 --
 ALTER TABLE `obra`
-  ADD PRIMARY KEY (`id_obra`),
-  ADD KEY `libro-autor` (`id_autor`) USING BTREE;
+ ADD PRIMARY KEY (`id_obra`), ADD KEY `libro-autor` (`id_autor`) USING BTREE;
 
 --
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`login`);
+ ADD PRIMARY KEY (`login`);
 
 --
 -- Restricciones para tablas volcadas
@@ -130,8 +129,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `obra`
 --
 ALTER TABLE `obra`
-  ADD CONSTRAINT `obra_ibfk_1` FOREIGN KEY (`id_autor`) REFERENCES `autor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
+ADD CONSTRAINT `obra_ibfk_1` FOREIGN KEY (`id_autor`) REFERENCES `autor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -18,7 +18,7 @@ if(isset($_POST["enviar"])) {
     $fecha=$_POST["fecha"];
     $dia=(int)substr($fecha,0,2);
     $mes=(int)substr($fecha,3,2);
-    $año=(int)substr($fecha,6, 4);
+    $aÃ±o=(int)substr($fecha,6, 4);
 
     switch($mes){
         case 1:
@@ -52,7 +52,7 @@ if(isset($_POST["enviar"])) {
 
             if ($dia <= 28 && $dia >= 1) {
                 $errorF=true;
-            } else if (($dia == 29 && (($año % 4 == 0 && $año % 100 != 0) || $año % 400 == 0))) {
+            } else if (($dia == 29 && (($aÃ±o % 4 == 0 && $aÃ±o % 100 != 0) || $aÃ±o % 400 == 0))) {
 
                 $errorF=true;
 
@@ -113,12 +113,12 @@ if(!$enviado || !$clave ){
 
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, "UTF-8"); ?> " method="post">
     Email:<input type="email" name="email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required value="<?php echo $email ;?>" /><br>
-    Fecha de nacimiento:<input type="date" name="fecha" value="<?php echo $fecha ;?>" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required / ><?php if(!$errorF){echo" La fecha tiene que tener un formato dd/mm/aaaa y tiene que ser valida"; $errorF=true;}?><br>
-    Contraseña:<input type="password" name="pass" pattern="[A-Za-z0-9!?-]{1,12}" value="<?php echo $pass ;?>" /><?php if(!$errorP){echo" La contraseña tiene que tener de 8 a 12 caracteres"; $errorP=true;}?><br>
-    Nombre:<input type="text" name="nombre" pattern="[a-zA-Z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" value="<?php echo $nombre ;?>" required /><br>
-    Apellidos:<input type="text" name="apellidos" pattern="[a-zA-Z àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}"value="<?php echo $apellidos ;?>" required /><br>
-    Teléfono:<input type="tel" name="tlf" pattern="[0-9]{9}" value="<?php echo $tlf ;?>" /><br>
-    Dirección:<input type="text" name="dir" pattern="[a-zA-Z0-9- \àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,48}" value="<?php echo $dir ;?>" /><br>
+    Fecha de nacimiento:<input type="date" name="fecha" value="<?php echo $fecha ;?>" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required /><?php if(!$errorF){echo" La fecha tiene que tener un formato dd/mm/aaaa y tiene que ser valida"; $errorF=true;}?><br>
+    ContraseÃ±a:<input type="password" name="pass" pattern="[A-Za-z0-9!?-]{1,12}" value="<?php echo $pass ;?>" /><?php if(!$errorP){echo" La contraseÃ±a tiene que tener de 8 a 12 caracteres"; $errorP=true;}?><br>
+    Nombre:<input type="text" name="nombre" pattern="[a-zA-Z Ã Ã¡Ã¢Ã¤Ã£Ã¥Ä…Ä�Ä‡Ä™Ã¨Ã©ÃªÃ«Ä—Ä¯Ã¬Ã­Ã®Ã¯Å‚Å„Ã²Ã³Ã´Ã¶ÃµÃ¸Ã¹ÃºÃ»Ã¼Å³Å«Ã¿Ã½Å¼ÅºÃ±Ã§Ä�Å¡Å¾Ã€Ã�Ã‚Ã„ÃƒÃ…Ä„Ä†ÄŒÄ–Ä˜ÃˆÃ‰ÃŠÃ‹ÃŒÃ�ÃŽÃ�Ä®Å�ÅƒÃ’Ã“Ã”Ã–Ã•Ã˜Ã™ÃšÃ›ÃœÅ²ÅªÅ¸Ã�Å»Å¹Ã‘ÃŸÃ‡Å’Ã†ÄŒÅ Å½âˆ‚Ã° ,.'-]{2,48}" value="<?php echo $nombre ;?>" required /><br>
+    Apellidos:<input type="text" name="apellidos" pattern="[a-zA-Z Ã Ã¡Ã¢Ã¤Ã£Ã¥Ä…Ä�Ä‡Ä™Ã¨Ã©ÃªÃ«Ä—Ä¯Ã¬Ã­Ã®Ã¯Å‚Å„Ã²Ã³Ã´Ã¶ÃµÃ¸Ã¹ÃºÃ»Ã¼Å³Å«Ã¿Ã½Å¼ÅºÃ±Ã§Ä�Å¡Å¾Ã€Ã�Ã‚Ã„ÃƒÃ…Ä„Ä†ÄŒÄ–Ä˜ÃˆÃ‰ÃŠÃ‹ÃŒÃ�ÃŽÃ�Ä®Å�ÅƒÃ’Ã“Ã”Ã–Ã•Ã˜Ã™ÃšÃ›ÃœÅ²ÅªÅ¸Ã�Å»Å¹Ã‘ÃŸÃ‡Å’Ã†ÄŒÅ Å½âˆ‚Ã° ,.'-]{2,48}"value="<?php echo $apellidos ;?>" required /><br>
+    TelÃ©fono:<input type="tel" name="tlf" pattern="[0-9]{9}" value="<?php echo $tlf ;?>" /><br>
+    DirecciÃ³n:<input type="text" name="dir" pattern="[a-zA-Z0-9- \Ã Ã¡Ã¢Ã¤Ã£Ã¥Ä…Ä�Ä‡Ä™Ã¨Ã©ÃªÃ«Ä—Ä¯Ã¬Ã­Ã®Ã¯Å‚Å„Ã²Ã³Ã´Ã¶ÃµÃ¸Ã¹ÃºÃ»Ã¼Å³Å«Ã¿Ã½Å¼ÅºÃ±Ã§Ä�Å¡Å¾Ã€Ã�Ã‚Ã„ÃƒÃ…Ä„Ä†ÄŒÄ–Ä˜ÃˆÃ‰ÃŠÃ‹ÃŒÃ�ÃŽÃ�Ä®Å�ÅƒÃ’Ã“Ã”Ã–Ã•Ã˜Ã™ÃšÃ›ÃœÅ²ÅªÅ¸Ã�Å»Å¹Ã‘ÃŸÃ‡Å’Ã†ÄŒÅ Å½âˆ‚Ã° ,.'-]{2,48}" value="<?php echo $dir ;?>" /><br>
     Ciclo Formativo:<select name="ciclo" >
                          <option value="DAW">DAW</option>
                          <option value="ASIR">ASIR</option>

@@ -19,70 +19,40 @@ if ($conexion->connect_errno) {
 
 
 echo "<p>A continuación mostramos algunos registros:</p>";
-?>
-<table style='border:0'>
-<tr style='background-color:lightblue'>
-<th>ID Obra</th>
-<th>ID Autor</th>
-<th>Titulo<a href=mostrarCatalogo.php?op=1>&#9650;</a><a href=mostrarCatalogo.php?op=2>&#9660;</a></th>
-<th>Autor<a href=mostrarCatalogo.php?op=3>&#9650;</a><a href=mostrarCatalogo.php?op=4>&#9660;</a></th>
-<th>Nacionalidad</th>
-</tr>
+
+echo "<table style='border:0'>";
+echo "<tr style='background-color:lightblue'>";
+echo "<th>ID Obra</th>";
+echo "<th>ID Autor</th>";
+echo "<th>Titulo<a href=mostrarCatalogo.php?op=1>&#9650;</a><a href=mostrarCatalogo.php?op=2>&#9660;</a></th>";
+echo "<th>Autor<a href=mostrarCatalogo.php?op=3>&#9650;</a><a href=mostrarCatalogo.php?op=4>&#9660;</a></th>";
+if (isset($_REQUEST["id_autor"])){
+echo "<th>Nacionalidad</th>";
+echo "<th>Imagen</th>";
+}
+echo "</tr>";
 
 
-<?php
 $ruta="img/";
 
 if (isset($_REQUEST["id_autor"])){
 $id_autor = $_REQUEST["id_autor"];
 
-    $resultado1 = $conexion -> query("SELECT * FROM autor,obra WHERE obra.id_autor=autor.id AND autor.id='$id_autor'");
+    $resultado = $conexion -> query("SELECT * FROM autor,obra WHERE obra.id_autor=autor.id AND autor.id='$id_autor'");
 
-if($resultado1->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
-while ($obra1 = $resultado1->fetch_assoc()) {
-    echo "<tr bgcolor='lightgreen'>";
-    echo "<td>".$obra1['id_obra']."</a></td>\n";
-    echo "<td>".$obra1['id_autor']."</a></td>\n";
-    echo "<td><a href='mostrarObra.php?id_obra=".$obra1['id_obra']."'>".$obra1['titulo']."</td>\n";
-    echo "<td><a href='mostrarCatalogo.php?id_autor=".$obra1['id_autor']."'>".$obra1['nombre']."</td>\n";
-    echo "<td>".$obra1['nacionalidad']."</td>\n";
-    echo "</tr>";
-    
-}
-
-mysqli_free_result($resultado1);
-
-$op = $_REQUEST["op"];
-}elseif(isset($_REQUEST["op"])&&($op==1)){
+}elseif(isset($_REQUEST["op"])&&($_REQUEST["op"]==1)){
     $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY titulo");
-}elseif (isset($_REQUEST["op"])&&($op==2)){
+}elseif (isset($_REQUEST["op"])&&($_REQUEST["op"]==2)){
     $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY titulo DESC");
-}elseif ((isset($_REQUEST["op"]))&&($op==3)){
+}elseif ((isset($_REQUEST["op"]))&&($_REQUEST["op"]==3)){
     $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY nombre");
-}elseif ((isset($_REQUEST["op"]))&&($op==4)){
+}elseif ((isset($_REQUEST["op"]))&&($_REQUEST["op"]==4)){
     $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY nombre DESC");
 
-
-
-
-
 //$resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY id_obra");
-
 //$resultado = $conexion -> query("SELECT distinct id_autor FROM obra,autor WHERE obra.id_autor=autor.id ORDER BY id_autor");
-if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
-while ($obra = $resultado->fetch_object('Obra')) {
-    echo "<tr bgcolor='lightgreen'>";
-    echo "<td>".$obra->getId_obra()."</a></td>\n";
-    echo "<td>".$obra->getId_autor()."</a></td>\n";
-    echo "<td><a href='mostrarObra.php?id_obra=".$obra->getId_obra()."'>".$obra->getTitulo()."</td>\n";
-    echo "<td><a href='mostrarCatalogo.php?id_autor=".$obra->getId_autor()."'>".$obra->getNombre()."</td>\n";
-    echo "<td>".$obra->getNacionalidad()."</td>\n";
-    echo "</tr>";
-    
-}
 
 
-mysqli_free_result($resultado);
 
 }else{
 
@@ -90,31 +60,49 @@ if (isset($_POST["enviar"])){
     $tit=$_POST['titulo'];
     $enviado=true;
     
-    $resultado2=$conexion -> query("SELECT * FROM autor,obra WHERE obra.id_autor=autor.id AND obra.titulo='$tit'");
-    if($resultado2->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
-    while ($obra2 = $resultado2->fetch_assoc()) {
-        echo "<tr bgcolor='lightgreen'>";
-        echo "<td>".$obra2['id_obra']."</a></td>\n";
-        echo "<td>".$obra2['id_autor']."</a></td>\n";
-        echo "<td><a href='mostrarObra.php?id_obra=".$obra2['id_obra']."'>".$obra2['titulo']."</td>\n";
-        echo "<td><a href='mostrarCatalogo.php?id_autor=".$obra2['id_autor']."'>".$obra2['nombre']."</td>\n";
-        echo "<td>".$obra2['nacionalidad']."</td>\n";
-        echo "</tr>";
-    }
-    mysqli_free_result($resultado2);
+    $resultado=$conexion -> query("SELECT * FROM autor,obra WHERE obra.id_autor=autor.id AND (obra.titulo='$tit' OR autor.nombre='$tit')");
+
+}else{
+    $resultado = $conexion -> query("SELECT * FROM obra,autor WHERE autor.id=obra.id_autor ORDER BY titulo");
 }
 
 }
-    ?>
-</table>
-<?php 
+
+if($resultado->num_rows === 0) echo "<p>No hay obras en la base de datos</p>";
+while ($obra = $resultado->fetch_assoc()) {
+    echo "<tr bgcolor='lightgreen'>";
+    echo "<td>".$obra['id_obra']."</a></td>\n";
+    echo "<td>".$obra['id_autor']."</a></td>\n";
+    echo "<td><a href='mostrarObra.php?id_obra=".$obra['id_obra']."'>".$obra['titulo']."</td>\n";
+    echo "<td><a href='mostrarCatalogo.php?id_autor=".$obra['id_autor']."'>".$obra['nombre']."</td>\n";
+    if (isset($_REQUEST["id_autor"])){
+    echo "<td>".$obra['nacionalidad']."</td>\n";
+    echo "<td><img src='$ruta".$obra['imag']."' width=100 heigh=100></td>\n";
+    }
+    echo "</tr>";
+    
+    /*while ($obra = $resultado->fetch_object('Obra')) {
+        echo "<tr bgcolor='lightgreen'>";
+        echo "<td>".$obra->getId_obra()."</a></td>\n";
+        echo "<td>".$obra->getId_autor()."</a></td>\n";
+        echo "<td><a href='mostrarObra.php?id_obra=".$obra->getId_obra()."'>".$obra->getTitulo()."</td>\n";
+        echo "<td><a href='mostrarCatalogo.php?id_autor=".$obra->getId_autor()."'>".$obra->getNombre()."</td>\n";
+        echo "<td>".$obra->getNacionalidad()."</td>\n";
+        echo "</tr>";
+    }*/
+    
+}
+mysqli_free_result($resultado);
+echo "</table>";
 if($enviado==false){
 ?>
-<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-    <label>Buscar obra</label>
-    <input type="text" name="titulo"><br/>
+<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post"><br/>
+    <label>Buscar: </label>
+    <input type="text" name="titulo">
     <input type="submit" value="Enviar" name="enviar">
 </form>
+
+
 <?php 
 }
 echo "<h3>Desconectando...</h3>";
@@ -122,5 +110,6 @@ mysqli_close($conexion);
 
 ?>
 <p><a href="mostrarCatalogo.php">Eliminar filtros</a></p>
+<a href="mostrarCatalogo.php">Volver</a>
 </body>
 </html>
