@@ -177,7 +177,7 @@ function suma($a,$b){
 echo "<p>La suma de 2 y 3 es ".suma(2,3)."</p>";
 
 
-function suma1($a,$b):float{
+function suma1($a,$b){
     $res=$a+$b;
     return "<p> no permitido </p>";
 }

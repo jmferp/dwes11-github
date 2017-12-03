@@ -2,10 +2,11 @@
 <body>
 
 <?php 
-
+$acum=0;
 if(isset($_POST["enviar"])){
    
     $acum=$_POST["hid"]+$_POST["num"]; 
+    echo $acum;
  
 }else{
     
