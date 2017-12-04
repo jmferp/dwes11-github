@@ -21,7 +21,7 @@ $conexion->query("SET NAMES 'UTF8'");
 if ($conexion->connect_errno) {
     echo "<p>Error al establecer la conexión (" . $conexion->connect_errno . ") " . $conexion->connect_error . "</p>";
 }
-echo "<p>A continuación mostramos algunos registros:</p>";
+//echo "<p>A continuación mostramos algunos registros:</p>";
 ?>
 <table style='border:0'>
 <tr style='background-color:lightblue'>
@@ -49,7 +49,7 @@ mysqli_free_result($resultado);
 
 </table>
 <?php 
-echo "<h3>Desconectando...</h3>";
+//echo "<h3>Desconectando...</h3>";
 mysqli_close($conexion);
 ?>
 <a href="mostrarCatalogo.php">Volver</a>

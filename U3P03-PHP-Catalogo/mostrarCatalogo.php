@@ -18,7 +18,7 @@ if ($conexion->connect_errno) {
 }
 
 
-echo "<p>A continuación mostramos algunos registros:</p>";
+//echo "<p>A continuación mostramos algunos registros:</p>";
 
 echo "<table style='border:0'>";
 echo "<tr style='background-color:lightblue'>";
@@ -105,7 +105,7 @@ if($enviado==false){
 
 <?php 
 }
-echo "<h3>Desconectando...</h3>";
+//echo "<h3>Desconectando...</h3>";
 mysqli_close($conexion);
 
 ?>
