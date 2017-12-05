@@ -23,7 +23,11 @@ if (!session_status () == PHP_SESSION_NONE){
 </head>
 <body>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+	Usuario:<input type="text" name="usuario">
 	Nombre:<input type="text" name="nombre">
+	Contraseña:<input type="text" name="password">
+	
+	
     <input type="submit" name="enviar">
 	</form> 
 </body>
