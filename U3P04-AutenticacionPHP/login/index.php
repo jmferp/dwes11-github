@@ -17,16 +17,19 @@ if (!isset($_SESSION['name'])){
         $usu=$_SESSION['name'];
         $pas=$_SESSION['password'];
 
-        $resultado = $conexion -> query("SELECT login,nombre FROM usuario where login='$usu' and password='$pas'");
-        if($resultado->num_rows === 0) echo "<p>No hay usuario en la base de datos</p>";
+        $resultado = $conexion -> query("SELECT * FROM usuario where login='$usu' and password='$pas'");
+        if($resultado->num_rows === 0){
+            echo "<p>No hay usuario en la base de datos</p>";
+        }else{
         while ($user= $resultado->fetch_assoc()) {
             echo "<p> Usuario: ".$user['login']."</p>\n";
             echo "<p> Nombre: ".$user['nombre']."</p>\n";
-            $mensaje="Damos la bienvenida a ".$user['nombre'];
+            echo $mensaje="Damos la bienvenida a ".$user['nombre'];
+        }
         }
         
     }else{
-        $mensaje="Sesion no iniciada";
+        echo $mensaje="Sesion no iniciada";
         header("location:logout.php");
     }
 }
@@ -38,7 +41,6 @@ if (!isset($_SESSION['name'])){
 <meta charset="UTF-8"/>
 </head>
 <body>
-<h3><?php echo $mensaje;?></h3>
 <p><a href="logout.php">Cerrar Sesion</a></p>
 <p><a href="baja.php">Borrar cuenta</a></p>
 

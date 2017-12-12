@@ -28,6 +28,12 @@ if (!session_status () == PHP_SESSION_NONE){
                 $resultado = $conexion -> query("SELECT login FROM usuario where login='$usu'");
                 if($resultado->num_rows === 0){
                     $_SESSION['name']=$_POST['usuario'];
+                    $usu=$_POST['usuario'];
+                    $pas=$_POST['password'];
+                    $nom=$_POST['nombre'];
+                    $desc=$_POST['descripcion'];
+                    $admin=$_POST['admin'];
+                    $_SESSION['password']=$pas;
                     $conexion -> query("INSERT INTO usuario VALUES ($usu,$pas,$nom,$admin,$desc)");
                 }else{
                     $mensajeError="Usuario ya existe";
