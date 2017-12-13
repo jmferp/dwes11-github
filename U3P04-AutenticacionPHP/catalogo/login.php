@@ -10,7 +10,7 @@ if (!session_status () == PHP_SESSION_NONE){
     session_name("idsesion11");
     session_start();
     if(isset($_SESSION["name"])){
-        header('location:index.php');
+        header('location:mostrarCatalogo.php');
     }
 }else{
     
@@ -28,7 +28,7 @@ if (!session_status () == PHP_SESSION_NONE){
          $_SESSION['password']=$_POST['password'];
          
         }
-        header('location:index.php');
+        header('location:mostrarCatalogo.php');
     }
     
     ?>
