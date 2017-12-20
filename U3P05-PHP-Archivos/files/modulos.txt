@@ -1,0 +1,7 @@
+Interfaz
+Servidor
+Cliente
+Despliegue
+Ingles
+Empresa
+
