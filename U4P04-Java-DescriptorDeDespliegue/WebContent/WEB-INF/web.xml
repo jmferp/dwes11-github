@@ -9,31 +9,50 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/errores/error404.html</location>
+  </error-page>
   <servlet>
-		<servlet-name>servletDeEjemploWebHttp</servlet-name>
-		<servlet-class>servlets.EjemploServletHttp</servlet-class>
-
-	</servlet>
-	<servlet>
-		<servlet-name>servletDeEjemploWebGenerico</servlet-name>
-		<servlet-class>servlets.EjemploServletGenerico</servlet-class>
-
-	</servlet>
-	<servlet>
-		<servlet-name>servletDeEjemploWeb</servlet-name>
-		<servlet-class>servlets.EjemploServlet</servlet-class>
-
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>servletDeEjemploWeb</servlet-name>
-		<url-pattern>/EjemploServletHttp</url-pattern>
-	</servlet-mapping>
-		<servlet-mapping>
-		<servlet-name>servletDeEjemploWeb</servlet-name>
-		<url-pattern>/EjemploServletGenerico</url-pattern>
-	</servlet-mapping>
-		<servlet-mapping>
-		<servlet-name>servletDeEjemploWeb</servlet-name>
-		<url-pattern>/EjemploServlet</url-pattern>
-	</servlet-mapping>
+    <servlet-name>EscribeFecha</servlet-name>
+    <servlet-class>servlets.EscribeFecha</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>InventaNumero</servlet-name>
+    <servlet-class>servlets.InventaNumero</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>servletDeEjemploWebHttp</servlet-name>
+    <servlet-class>servlets.EjemploServletHttp</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>servletDeEjemploWebGenerico</servlet-name>
+    <servlet-class>servlets.EjemploServletGenerico</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>servletDeEjemploWeb</servlet-name>
+    <servlet-class>servlets.EjemploServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EscribeFecha</servlet-name>
+    <url-pattern>/EscribeFecha</url-pattern>
+    <url-pattern>/ShowDate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>InventaNumero</servlet-name>
+    <url-pattern>/InventaNumero</url-pattern>
+    <url-pattern>/RandomNumber</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletDeEjemploWeb</servlet-name>
+    <url-pattern>/EjemploServletHttp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletDeEjemploWeb</servlet-name>
+    <url-pattern>/EjemploServletGenerico</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>servletDeEjemploWeb</servlet-name>
+    <url-pattern>/EjemploServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
