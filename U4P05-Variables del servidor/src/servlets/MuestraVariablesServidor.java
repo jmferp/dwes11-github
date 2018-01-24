@@ -58,7 +58,6 @@ public class MuestraVariablesServidor extends HttpServlet {
 		out.println("<tr><td>Software de SERVIDOR</td><td>" + contexto.getServerInfo() + "</td></tr>");
 		out.println("<tr><td>Directorio de DESPLIEGUE</td><td>" + contexto.getRealPath("/") + "</td></tr>");
 		out.println("<tr><td>Nombre de la aplicación</td><td>" + contexto.getServletContextName() + "</td></tr>");
-		out.println("<tr><td>Parametro de inicio de servlet</td><td>" + contexto.getInitParameter("alumno") + "</td></tr>");
 		out.println("</table>");
 		
 		out.println("<h3>Parametros de inicializacion del servlet"+request.getServletPath()+"</h3>");
@@ -93,13 +92,14 @@ public class MuestraVariablesServidor extends HttpServlet {
 		out.println("</table>");
 		
 		out.println("<h3>Atributos de la request</h3>");
-		request.setAttribute("fecha", new Date(0));
+		request.setAttribute("fecha", new Date(1/1/2001));
 		request.setAttribute("autor", "Tu Nombre");
+		Enumeration <String> parRequest=request.getAttributeNames();
 		out.println("<table style='border-collapse: collapse;margin:10px'>");
 		out.println("<tr><td><b>Variable</b></td><td><b>Valor</b></td></tr>");
-		while(parametrosRequest.hasMoreElements()) {
-			String actual=parametrosRequest.nextElement();
-		out.print("<tr><td>"+actual+"</td><td>"+request.getParameter(actual)+"</td></tr>");
+		while(parRequest.hasMoreElements()) {
+			String actual=parRequest.nextElement();
+		out.print("<tr><td>"+actual+"</td><td>"+request.getAttribute(actual)+"</td></tr>");
 		}
 		out.println("</table>");
 		out.close();
