@@ -38,18 +38,14 @@ public class MostrarNumeroServlet extends HttpServlet {
 			response.sendRedirect(contexto.getContextPath()+"/Sorpresa");
 			out.println("<p>Error: No se ha generado el numero</p>");
 		}else {
-			Object o=request.getAttribute("num1");
-			String r=o.toString();
-			//int g=Integer.parseInt(request.getAttribute("num1").toString());
-			//int b=Integer.parseInt(request.getAttribute("num1").toString());
-			out.println("<p>"+r+"</p>");
-			//out.println("<p>"+g+"</p>");
-			//out.println("<p>"+b+"</p>");
-		//out.println("<body style='color:rgb("+r+","+g+","+b+");'>");
+			int r=(int)request.getAttribute("num1");
+			int g=(int)request.getAttribute("num2");
+			int b=(int)request.getAttribute("num3");
+		out.println("<div style='color:rgb("+r+","+g+","+b+");'>");
 		out.println("<p>"+request.getAttribute("numero")+"</p>");
+		out.println("</div>");
 		}
 		out.println("<a href="+"./index.html"+">Index</a>");
-		out.print("</body>");
 		out.close();
 		
 	}
