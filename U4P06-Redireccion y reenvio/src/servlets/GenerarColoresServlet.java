@@ -29,11 +29,11 @@ public class GenerarColoresServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		double num1=Math.round(Math.random()*255+1);
+		int num1=(int)Math.round(Math.random()*255+1);
 		request.setAttribute("num1", num1);
-		double num2=Math.round(Math.random()*255+1);
+		int num2=(int)Math.round(Math.random()*255+1);
 		request.setAttribute("num2", num2);
-		double num3=Math.round(Math.random()*255+1);
+		int num3=(int)Math.round(Math.random()*255+1);
 		request.setAttribute("num3", num3);
 		RequestDispatcher rd=request.getRequestDispatcher("/MostrarNumero");
 		rd.forward(request, response);
