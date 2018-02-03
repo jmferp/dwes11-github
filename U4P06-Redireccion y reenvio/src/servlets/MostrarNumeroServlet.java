@@ -29,8 +29,7 @@ public class MostrarNumeroServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
 		PrintWriter out = response.getWriter();
 		out.println("<html><head><meta charset='UTF-8'/><title>"+request.getAttribute("numero")+"</title></head>");
 		if(request.getAttribute("numero")==null) {
@@ -38,10 +37,16 @@ public class MostrarNumeroServlet extends HttpServlet {
 			response.sendRedirect(contexto.getContextPath()+"/Sorpresa");
 			out.println("<p>Error: No se ha generado el numero</p>");
 		}else {
+<<<<<<< HEAD
 			int r=Integer.parseInt(request.getAttribute("num1").toString());
 			int g=Integer.parseInt(request.getAttribute("num2").toString());
 			int b=Integer.parseInt(request.getAttribute("num3").toString());
 			out.println("<p>"+r+"</p>");
+=======
+			int r=(int)request.getAttribute("num1");
+			int g=(int)request.getAttribute("num2");
+			int b=(int)request.getAttribute("num3");
+>>>>>>> branch 'master' of https://github.com/jmferp/dwes11-github.git
 		out.println("<div style='color:rgb("+r+","+g+","+b+");'>");
 		out.println("<p>"+request.getAttribute("numero")+"</p></div>");
 		}
