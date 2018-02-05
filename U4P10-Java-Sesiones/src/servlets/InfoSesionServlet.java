@@ -32,27 +32,28 @@ public class InfoSesionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Crear una sesión o recuperar la existente si se encuentra la cookie de sesión
 		HttpSession session = request.getSession();
-		
+		//session.setMaxInactiveInterval(2*60);
 		String mensaje="";
 		int contador = 0;
-		HttpSession primeraVez = request.getSession();
+
 		// Comprobar si es la primera vez
 		if (session.isNew()) {
 		  session.setAttribute("contador", 0);
 		  mensaje="Esta es tu primera visita, se ha creado una sesión";
-		  primeraVez.setAttribute("mensaje", mensaje);
+		  session.setAttribute("primeraVez", mensaje);
 		 
 		} else {
-		  primeraVez.removeAttribute("mensaje");
-		  contador = (int) session.getAttribute("contador");
+		  session.removeAttribute("primeraVez");
+		  contador = (int)session.getAttribute("contador");
 		  contador++;
 		  session.setAttribute("contador", contador);
 		}
 		
 		
-		if (request.getParameter("reiniciarSesion") != null) {
+		if (request.getParameter("reiniciarSesion")!=null) {
 			session.invalidate();
 			session = request.getSession();
+			session.setAttribute("contador", 0);
 		}
 
 		// Obtener datos sobre la sesión
@@ -75,6 +76,7 @@ public class InfoSesionServlet extends HttpServlet {
 		            "</ul>" +
 		        "<p><a href='" + request.getRequestURI() + "'>Refrescar</a></p>");
 		out.println("<p><a href='" + request.getRequestURI() + "?reiniciarSesion=true'>Borrar la sesión</a></p>");
+		out.println("<p><a href='" + response.encodeURL(request.getRequestURI())+ "'>Refrescar con reescritura de URL</a></p>");  
 		out.println("</body></html>");
 		out.close();
 	}
