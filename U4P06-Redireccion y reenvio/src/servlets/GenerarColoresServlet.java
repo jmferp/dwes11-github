@@ -35,8 +35,9 @@ public class GenerarColoresServlet extends HttpServlet {
 		request.setAttribute("num2", num2);
 		int num3=(int)Math.round(Math.random()*255+1);
 		request.setAttribute("num3", num3);
-		RequestDispatcher rd=request.getRequestDispatcher("/MostrarNumero");
-		rd.forward(request, response);
+		RequestDispatcher rd=request.getRequestDispatcher("./MostrarNumero");
+		
+		rd.forward(request,response);
 	}
 
 	/**

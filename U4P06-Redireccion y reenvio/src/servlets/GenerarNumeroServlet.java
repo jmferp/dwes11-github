@@ -35,7 +35,7 @@ public class GenerarNumeroServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		double numero=Math.round(Math.random()*100+1);
 		request.setAttribute("numero", numero);
-		RequestDispatcher rd=request.getRequestDispatcher("/GenerarColores");
+		RequestDispatcher rd=request.getRequestDispatcher("./GenerarColores");
 		rd.forward(request, response);
 		//ServletContext contexto = getServletContext();
 		//response.sendRedirect(contexto.getContextPath()+"/MostrarNumero");

@@ -37,14 +37,20 @@ public class MostrarNumeroServlet extends HttpServlet {
 			response.sendRedirect(contexto.getContextPath()+"/Sorpresa");
 			out.println("<p>Error: No se ha generado el numero</p>");
 		}else {
+<<<<<<< HEAD
+			int r=Integer.parseInt(request.getAttribute("num1").toString());
+			int g=Integer.parseInt(request.getAttribute("num2").toString());
+			int b=Integer.parseInt(request.getAttribute("num3").toString());
+			out.println("<p>"+r+"</p>");
+=======
 			int r=(int)request.getAttribute("num1");
 			int g=(int)request.getAttribute("num2");
 			int b=(int)request.getAttribute("num3");
+>>>>>>> branch 'master' of https://github.com/jmferp/dwes11-github.git
 		out.println("<div style='color:rgb("+r+","+g+","+b+");'>");
 		out.println("<p>"+request.getAttribute("numero")+"</p></div>");
 		}
 		out.println("<a href="+"./index.html"+">Index</a>");
-		out.print("</body>");
 		out.close();
 		
 	}
