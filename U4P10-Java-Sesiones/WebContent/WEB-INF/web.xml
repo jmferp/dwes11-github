@@ -9,12 +9,9 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-
- <session-config>
-     <cookie-config>
-      <name>idSesion11</name>
+  <!-- <session-config>
+    <cookie-config>
+      <name>idSession11</name>
     </cookie-config>
-  </session-config>
-
-
+  </session-config> -->
 </web-app>
