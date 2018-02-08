@@ -6,31 +6,22 @@ import java.io.PrintWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 
 /**
- * Servlet Filter implementation class LogFilter
+ * Servlet Filter implementation class WrapFilter
  */
-
-//@WebFilter(urlPatterns = "/Saludo")
-//@WebFilter(servletNames="SaludoServlet")
-//@WebFilter(servletNames= {"SaludoServlet","FechaServlet"})
-//@WebFilter(urlPatterns = {"/Saludo","/Fecha"})
-//@WebFilter(urlPatterns = "*.html")
-//@WebFilter(urlPatterns = {"*.html","/Saludo"})
-//@WebFilter(urlPatterns = "*.html",servletNames="SaludoServlet")
-//@WebFilter(urlPatterns = "/*")
-@WebFilter(filterName="FiltroDeRegistro")
-public class LogFilter implements Filter {
+//@WebFilter("/FiltroDeWrap")
+public class WrapFilter implements Filter {
 
     /**
      * Default constructor. 
      */
-    public LogFilter() {
+    public WrapFilter() {
         // TODO Auto-generated constructor stub
     }
 
@@ -45,17 +36,19 @@ public class LogFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
-		System.out.println("Aplicando filtro registro");
-		if (request instanceof HttpServletRequest) 
-			System.out.println("Petición:" + ((HttpServletRequest)request).getRequestURL().toString());
+		System.out.println("Aplicando filtro envoltorio");
+		ServletContext contexto = request.getServletContext();
+		response.setContentType("text/html;UTF-8");
 		PrintWriter out = response.getWriter();
+		out.println("<html><head><meta charset='UTF-8'/><title>"+contexto.getAttribute("contador")+"</title></head><body>");
 		
 		
-		out.println("<p>Mensaje 1: Estamos aplicando el filtro de registro</p>");
 		chain.doFilter(request, response);
-	
-		out.println("<p>Mensaje 2: De vuelta en el filtro tras ejecutar el resto de la cadena</p>");
+		
+		out.println("<p>Jose Maria<p>");
+		
+		out.println("<p>"+contexto.getAttribute("contador")+"</p>");
+		out.println("</body></html>");
 		
 	}
 

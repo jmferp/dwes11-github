@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,16 +32,21 @@ public class FechaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;UTF-8");
+		//response.setContentType("text/html;UTF-8");
 		PrintWriter out = response.getWriter();
-		out.println("<html><head><meta charset='UTF-8'/></head><body>");
-		out.println("<body><h1>Servlet sencillo que muestra la fecha actual</h1>");
+		
+		ServletContext contexto = getServletContext();
+		System.out.println(contexto.getAttribute("contador"));
+		
+		
+		//out.println("<html><head><meta charset='UTF-8'/></head><body>");
+		out.println("<h1>Servlet sencillo que muestra la fecha actual</h1>");
 		Date fecha = new Date();
 		DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 		out.println("<p>Fecha: "+df.format(fecha)+"</p>");
 		out.println("<p><a href='./index.html'>Volver al inicio</a></p>");
-		out.println("</body></html>");
-		out.close();
+		//out.println("</body></html>");
+		//out.close();
 	}
 
 	/**
