@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta charset='UTF-8'/>
+</head>
+
+<body>
+	<h1>INDEX</h1>
+	<form id="formulario" action="/Otro_formulario/ValidarFormulario" method="post">
+		<h3>*Nombre: </h3> 
+		<input type="text" name="nombre">
+		
+		<h3>*Numero límite: </h3> 
+		<input type="number" name="numero">
+		
+		<h3>*Color: </h3> 
+		<input type="color" name="color" value="#ff0000">
+		
+		<h3>Password: minimo(1 numero, 1 caracter especial('*','-','+','?','¿','!','¡'), 1 mayuscula) </h3> 
+		<input type="password" name="pass">
+		
+		<h3>Fecha Nacimiento: </h3> 
+		<input type="date" name="fecha">
+		
+		<h3>Sexo: </h3> 
+		Masculino.<input type="radio" name="sexo" value="Masculino"></br>
+		Femenino.<input type="radio" name="sexo" value="Femenino"></br>
+		Otro.<input type="radio" name="sexo" value="Otros">
+		
+		<h3>Deportes favoritos: </h3> 
+		<input type="checkbox" name="deporte" value="futbol">Futbol </br>
+		<input type="checkbox" name="deporte" value="baloncesto">Baloncesto </br>
+		<input type="checkbox" name="deporte" value="tenis">Tenis </br>
+		<input type="checkbox" name="deporte" value="padel">Padel </br>
+		<input type="checkbox" name="deporte" value="balonmano">Balonmano </br>
+		<input type="checkbox" name="deporte" value="otros">Otros </br>
+		
+		<h3>Marcas de coches favoritas:</h3> 
+		<select name="coches" form="formulario">
+  			<option value="volvo">Volvo</option>
+		  	<option value="saab">Saab</option>
+  			<option value="opel">Opel</option>
+  			<option value="audi">Audi</option>
+  			<option value="otros">Otros</option>
+		</select>
+	
+	<h3>Introduce una breve descripción sobre ti:</h3> 
+	<textarea rows="4" cols="50" name="descripcion" form="formulario">
+Escribe aqui...</textarea>
+	</br>
+	
+	
+		
+		<input type="submit" name="enviar">
+	</form>
+	
+	
+</body>
+</html>
