@@ -7,10 +7,10 @@
 <body>
 <form action="/U4P07-Java-DatosPersonales/ValidarFormulario" method="post">
     Email:<input type="email" name="email" required value="" /><br><br>
-    Fecha de nacimiento:<input type="date" name="fecha" value="" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required /><br><br>
+    Fecha de nacimiento:<input type="date" name="fecha" value="" required /><br><br>
     Nombre:<input type="text" name="nombre" value="" required /><br><br>
     Apellidos:<input type="text" name="apellidos" value="" required /><br><br>
-    Contraseña:<input type="password" name="pasword" value=""><br><br>
+    Contraseña:<input type="password" name="password" value=""/><br><br>
     Telefono:<input type="tel" name="tlf" pattern="[0-9]{9}" value="" /><br><br>
     Dirección:<input type="text" name="dir"  value="" /><br><br>
     <fieldset>
@@ -31,6 +31,8 @@
                          <option value="ASIR">ASIR</option>
                          <option value="DAM">DAM</option>
     </select><br><br>
+    Numero limite:<input type="text" name="numero"  value="" /><br><br>
+    Color<input type="color" name="color"  value="" /><br><br>
     Observaciones:<textarea></textarea><br>                
     <br> <input name="enviar" type="submit" >
 </form>

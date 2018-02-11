@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,84 +35,103 @@ public class ValidarFormularioServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		out.println("<html><head><meta charset='UTF-8'/></head>");
-
-		boolean validado=true;
+		//PrintWriter out = response.getWriter();
+		//out.println("<html><head><meta charset='UTF-8'/></head>");
+		int num[]= {0,1,2,3,4,5,6,7,8,9};
+		
+		boolean validado=false;
 		boolean env=false;
 		boolean env1=false;
 		boolean env2=false;
 		boolean env3=false;
-		boolean env4=false;
+
 		String pas=request.getParameter("password");
-		String num[]={"0","1","2","3","4","5","6","7","8","9"};
-		String letra[]= {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","X","Y","Z"};
-		for(int i=0;i<num.length;i++) {
-			if(pas.contains(num[i])) {
-			env=true;
+		
+		for (int i = 0; i < pas.length(); i++) {
+			char p = pas.charAt(i);
+			String pa = String.valueOf(p);
+			if (pa.matches("[A-Z]")) {
+				env = true;
+			}
+			if (pa.matches("[0-9]")) {
+				env1 = true;
 			}
 		}
-		for(int j=0;j<letra.length;j++) {
-			if(pas.contains(letra[j])) {
-				env1=true;
-			}
-		}
-		String especiales[]= {"á","é","í","ó","ú","ü","ñ"};
-		for(int k=0;k<especiales.length;k++) {
-			if(pas.contains(especiales[k])) {
-				env2=true;
+		
+		char especiales[]= {'?','¿','!','¡','(',')','@'};
+		for(int i=0;i<pas.length();i++) {
+			for(int k=0;k<especiales.length;k++) {
+				if(pas.charAt(i)==(especiales[k])) {
+					env2=true;
+				}
 			}
 		}
 		
 		String tlf=request.getParameter("tlf");
-		for(int i=0;i<num.length;i++) {
-			int j=0;
-			String s=String.valueOf(tlf.charAt(j));
-			if(s.equalsIgnoreCase(num[i]) ) {
-				env3=true;
+		int cont=0;
+		for(int j=0;j<tlf.length();j++) {
+			for(int i=0;i<num.length;i++) {
+				String s=String.valueOf(tlf.charAt(j));
+				int st=Integer.parseInt(s);
+				if(st==(num[i]) ) {
+					cont++;
+				}
 			}
 		}
 		
-		SimpleDateFormat formatoFechaFormulario= new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date fecha = formatoFechaFormulario.parse(request.getParameter("fecha"));
-			SimpleDateFormat formatoFechaSalida=new SimpleDateFormat("dd/MM/yyyy");
-			out.println("Fecha:"+formatoFechaSalida.format(fecha));
+		SimpleDateFormat formatoEntrada = new SimpleDateFormat("yyyy-MM-dd");
+		
+
+		try{
+
+			Date fecha=formatoEntrada.parse(request.getParameter("fecha"));
+			Date actual=new Date();
 			
-			Date date=new Date();
-			DateFormat hourdateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-			if(fecha.before(date)) {
-				env4=true;
-			}
+			long ActualMilisegundos = actual.getTime();
+			long FechaMilisegundos1 = fecha.getTime();
 			
-		}catch(ParseException e){
+			
+		if(ActualMilisegundos>FechaMilisegundos1){
+			env3=true;			
+		}else {
+					
+		}
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		if(env&&env1&&env2&&env3&&env4) {
+		int nm=Integer.parseInt(request.getParameter("numero"));
+		boolean env4=false;
+		if(request.getParameter("numero")!="") {
+			if(nm>0) {
+			if(request.getParameter("numero").matches("[0-9]+")) {
+				env4=true;
+			
+			}
+		}
+		}
+		
+		System.out.println(env);
+		System.out.println(env1);
+		System.out.println(env2);
+		System.out.println(env3);
+		System.out.println(cont);
+		
+		if(env&&env1&&env2&&env3&&cont==9&&env4) {
 			validado=true;
 		}
 		
-		if(validado) {
-		
-
-		out.print("<ul>");
-		Enumeration <String> param=request.getParameterNames();
-		while(param.hasMoreElements()) {
-			String actual=param.nextElement();
-			out.println("<li>"+actual+" "+request.getParameter(actual)+"</li>");
-		}
-		out.println("</ul>");
-		
-		String[] valores=request.getParameterValues("aficion");
-		out.println("<ul>Aficion");
-		for(int i=0;i<valores.length;i++) {
-			out.println("<li>"+valores[i]+"</li>");
-		}
-		out.println("</ul>");
+		if(!validado) {
+			response.sendRedirect("./index.html");
 		}else {
-			out.println("Error");
+			int limite=Integer.parseInt(request.getParameter("numero"));
+			int numero=(int)(Math.random()*limite);
+			request.setAttribute("numeroAleatorio", numero);
+			RequestDispatcher rd = request.getRequestDispatcher("/ProcesarDatos");
+			rd.forward(request, response);	
 		}
+
+		
 	}
 
 	/**

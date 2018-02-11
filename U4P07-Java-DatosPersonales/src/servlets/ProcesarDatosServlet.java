@@ -60,10 +60,16 @@ public class ProcesarDatosServlet extends HttpServlet {
 		/*Map <String,String[]> paresPeticion=request.getParameterMap();
 		paresPeticion.forEach((parametro,valor)->{
 			out.println("<p>"+parametro+"");
-			for(Object v:valor) {
-				out.println(":"+valor+"</p>");
+			for(String v :valor) {
+				out.println(":"+v+"</p>");
 			}
 		});*/
+		
+		int number = (int) request.getAttribute("numeroAleatorio");
+		out.println("<h1 style='color:"+request.getParameter("color")+"'>" + number + "</h1>");
+		
+		
+	out.close();
 			
 		
 		
