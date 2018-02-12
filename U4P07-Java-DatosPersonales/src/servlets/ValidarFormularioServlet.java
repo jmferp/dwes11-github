@@ -111,11 +111,6 @@ public class ValidarFormularioServlet extends HttpServlet {
 		}
 		}
 		
-		System.out.println(env);
-		System.out.println(env1);
-		System.out.println(env2);
-		System.out.println(env3);
-		System.out.println(cont);
 		
 		if(env&&env1&&env2&&env3&&cont==9&&env4) {
 			validado=true;

@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class WrapFilter
  */
-//@WebFilter("/FiltroDeWrap")
+@WebFilter(filterName="/FiltroDeWrap")
 public class WrapFilter implements Filter {
 
     /**

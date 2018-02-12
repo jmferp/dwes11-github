@@ -34,6 +34,7 @@ public class ProcesarDatosServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		out.println("<html><head><meta charset='UTF-8'/></head>");
 		SimpleDateFormat formatoFechaFormulario= new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Date fecha = formatoFechaFormulario.parse(request.getParameter("fecha"));
