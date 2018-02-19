@@ -9,4 +9,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+   <context-param>
+  	<param-name>usuario</param-name>
+  	<param-value>alumno_rw</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>password</param-name>
+  	<param-value>dwes</param-value>
+  </context-param>
+    <context-param>
+  	<param-name>usuario1</param-name>
+  	<param-value>alumno</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>password1</param-name>
+  	<param-value>alumno</param-value>
+  </context-param>
+  <context-param>
+	<param-name>url</param-name>
+  	<param-value>jdbc:mariadb://localhost/animales</param-value>
+  </context-param>
 </web-app>
