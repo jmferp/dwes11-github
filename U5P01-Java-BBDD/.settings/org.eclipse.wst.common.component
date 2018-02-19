@@ -2,7 +2,12 @@
     <wb-module deploy-name="U5P01-Java-BBDD">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+<<<<<<< HEAD
         <property name="context-root" value="U5P01-Java-BBDD"/>
         <property name="java-output-path" value="/U5P01-Java-BBDD/build/classes"/>
+=======
+        <property name="java-output-path" value="/U5P01-Java-BBDD/build/classes"/>
+        <property name="context-root" value="U5P01-Java-BBDD"/>
+>>>>>>> branch 'master' of https://github.com/jmferp/dwes11-github.git
     </wb-module>
 </project-modules>
