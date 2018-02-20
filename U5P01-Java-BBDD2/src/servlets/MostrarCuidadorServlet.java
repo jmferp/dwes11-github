@@ -106,6 +106,7 @@ public class MostrarCuidadorServlet extends HttpServlet {
 			  e.printStackTrace();
 			}
 		}
+		out.println("</body></html>");
 	}
 
 	/**

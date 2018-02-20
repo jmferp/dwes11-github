@@ -92,9 +92,10 @@ public class MostrarCuidadoresServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		out.println("<a href='./index.html'>Inicio</a>");
-
+		
+		
 		out.println("</body></html>");
+		
 	}
 
 	/**
