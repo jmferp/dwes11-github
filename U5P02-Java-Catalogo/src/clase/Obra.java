@@ -1,4 +1,4 @@
-package servlets;
+package clase;
 public class Obra {
 	
 	private String id_obra;

@@ -1,5 +1,9 @@
 package servlets;
 
+
+import clase.Obra;
+import clase.Autor;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -56,12 +60,19 @@ public class MostrarCatalogoServlet extends HttpServlet {
 
 		  // Paso 4: Ejecutar la sentencia SQL a través de los objetos Statement
 		  String order="";
-		  if(request.getParameter("op")=="1") {
-			  order="ORDER BY titulo";
-		  }else if(request.getParameter("op")=="2"){
-			  order="ORDER BY titulo DESC";
+		  if(request.getParameter("op")!=null) {
+		  if(request.getParameter("op").equalsIgnoreCase("1")) {
+			  order="ORDER BY titulo;";
+		  	}else if(request.getParameter("op").equalsIgnoreCase("2")){
+			  order="ORDER BY titulo DESC;";
+		  	}else if(request.getParameter("op").equalsIgnoreCase("3")){
+				  order="ORDER BY nombre;";
+		  	}else if(request.getParameter("op").equalsIgnoreCase("4")){
+				  order="ORDER BY nombre DESC;";
+		  	}
 		  }
-		  String consulta = "SELECT * from obra,autor WHERE obra.id_autor=autor.id"+order;
+		  
+		  String consulta = "SELECT * from obra,autor WHERE obra.id_autor=autor.id "+order;
 		  
 		  
 		  ResultSet rset = sentencia.executeQuery(consulta);
@@ -71,8 +82,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
 			    out.println("<h3>No hay resultados</p>");
 			}
 		  
-		 
-		 
+		  if(request.getParameter("id_autor")==null) {
 		  
 		  out.println("<table style='border:'5px''>");
 		  out.println("<tr style='background-color:lightblue'><td>Titulo<a href=MostrarCatalogo?op=1>&#9650;</a><a href=MostrarCatalogo?op=2>&#9660;</a></td>"
@@ -85,6 +95,24 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		    out.println("<td>" +"<a href=MostrarObra?id_obra='"+obra.getId_obra()+"'>"+obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
 		  }
 		  out.println("</table>");
+		  
+		  }else {
+			  
+			  out.println("<table style='border:'5px''>");
+			  out.println("<tr style='background-color:lightblue'><td>Titulo<a href=MostrarCatalogo?op=1>&#9650;</a><a href=MostrarCatalogo?op=2>&#9660;</a></td>"
+			  		+ "<td>Autor<a href=MostrarCatalogo?op=3>&#9650;</a><a href=MostrarCatalogo?op=4>&#9660;</a></td>"
+			  		+ "<td>Imagen</td></tr>");
+			  while (rset.next()) {
+				 Obra obra=new Obra(rset.getString("id_obra"), rset.getString("titulo"), rset.getString("id_autor"), rset.getString("genero"), rset.getString("descripcion"), rset.getString("año"), rset.getString("imagen"), rset.getString("nombre"));
+				
+				out.println("<tr style='background-color:orange'>");
+			    out.println("<td>" +"<a href=MostrarObra?id_obra='"+obra.getId_obra()+"'>"+obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
+			  }
+			  out.println("</table>");
+			  
+		  }
+		  
+		  
 
 		  // Paso 6: Desconexión
 		  if (sentencia != null)
@@ -109,3 +137,26 @@ public class MostrarCatalogoServlet extends HttpServlet {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
