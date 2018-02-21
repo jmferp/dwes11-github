@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,16 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MostrarCatalogo
+ * Servlet implementation class MostrarObraServlet
  */
-@WebServlet("/MostrarCatalogo")
-public class MostrarCatalogoServlet extends HttpServlet {
+@WebServlet("/MostrarObra")
+public class MostrarObraServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MostrarCatalogoServlet() {
+    public MostrarObraServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -55,15 +54,12 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		  sentencia = conn.createStatement();
 
 		  // Paso 4: Ejecutar la sentencia SQL a través de los objetos Statement
-		  String order="";
-		  if(request.getParameter("op")=="1") {
-			  order="ORDER BY titulo";
-		  }else if(request.getParameter("op")=="2"){
-			  order="ORDER BY titulo DESC";
-		  }
-		  String consulta = "SELECT * from obra,autor WHERE obra.id_autor=autor.id"+order;
-		  
-		  
+		  String where="";
+			if(request.getParameter("id_obra")!=null) {
+				where="&& id_obra="+request.getParameter("id_obra");
+			}
+			
+		  String consulta = "SELECT * from obra,autor WHERE obra.id_autor=autor.id "+where;
 		  ResultSet rset = sentencia.executeQuery(consulta);
 
 		   // Paso 5: Mostrar resultados
@@ -75,14 +71,12 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		 
 		  
 		  out.println("<table style='border:'5px''>");
-		  out.println("<tr style='background-color:lightblue'><td>Titulo<a href=MostrarCatalogo?op=1>&#9650;</a><a href=MostrarCatalogo?op=2>&#9660;</a></td>"
-		  		+ "<td>Autor<a href=MostrarCatalogo?op=3>&#9650;</a><a href=MostrarCatalogo?op=4>&#9660;</a></td>"
-		  		+ "<td>Imagen</td></tr>");
+		  out.println("<tr style='background-color:lightblue'><td>Titulo</td><td>Autor</td><td>Imagen</td></tr>");
 		  while (rset.next()) {
 			 Obra obra=new Obra(rset.getString("id_obra"), rset.getString("titulo"), rset.getString("id_autor"), rset.getString("genero"), rset.getString("descripcion"), rset.getString("año"), rset.getString("imagen"), rset.getString("nombre"));
 			
 			out.println("<tr style='background-color:orange'>");
-		    out.println("<td>" +"<a href=MostrarObra?id_obra='"+obra.getId_obra()+"'>"+obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
+		    out.println("<td>" + obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
 		  }
 		  out.println("</table>");
 
@@ -95,9 +89,8 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		  e.printStackTrace();
 		}
 	
-
+	
 		out.println("</body></html>");
-		
 	}
 
 	/**
