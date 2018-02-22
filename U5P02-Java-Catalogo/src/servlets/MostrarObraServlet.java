@@ -73,12 +73,12 @@ public class MostrarObraServlet extends HttpServlet {
 		 
 		  
 		  out.println("<table style='border:'5px''>");
-		  out.println("<tr style='background-color:lightblue'><td>Titulo</td><td>Autor</td><td>Imagen</td></tr>");
+		  out.println("<tr style='background-color:lightblue'><td>Titulo</td><td>Autor</td><td>Genero</td><td>Imagen</td></tr>");
 		  while (rset.next()) {
 			 Obra obra=new Obra(rset.getString("id_obra"), rset.getString("titulo"), rset.getString("id_autor"), rset.getString("genero"), rset.getString("descripcion"), rset.getString("año"), rset.getString("imagen"), rset.getString("nombre"));
 			
 			out.println("<tr style='background-color:orange'>");
-		    out.println("<td>" + obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
+		    out.println("<td>" + obra.getTitulo() + "</td><td> " + obra.getNombre() + "</td><td>"+obra.getGenero()+"</td><td><img src='./img/"+obra.getImagen()+"' width=100 heigh=100></td></tr>");
 		  }
 		  out.println("</table>");
 
@@ -91,7 +91,8 @@ public class MostrarObraServlet extends HttpServlet {
 		  e.printStackTrace();
 		}
 	
-	
+		out.print("<a href=MostrarCatalogo>Eliminar filtros<br>");
+
 		out.println("</body></html>");
 	}
 
