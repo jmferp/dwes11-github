@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class MostrarCatalogo
  */
-//@WebServlet("/MostrarCatalogo")
+@WebServlet("/MostrarCatalogo")
 public class MostrarCatalogoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,9 +52,11 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		 Class.forName("org.mariadb.jdbc.Driver").newInstance();
 
 		  // Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
-		  String userName = "alumno";
-		  String password = "alumno";
-		  String url = "jdbc:mariadb://localhost:3306/catalogo11";
+		  String userName = contexto.getInitParameter("usr_db_r");
+		  String password = contexto.getInitParameter("psw_db_r");
+		  String ur=contexto.getInitParameter("srv_db");
+		  String url = ur+"/catalogo11";
+
 		  conn = DriverManager.getConnection(url, userName, password);
 
 		  // Paso 3: Crear la sentencia SQL
