@@ -29,13 +29,13 @@
     <param-name>psw_db_rw</param-name>
     <param-value>dwes</param-value>
   </context-param>
-<!--    <servlet>
+   <servlet>
     <servlet-name>MostrarCatalogo</servlet-name>
     <servlet-class>servlets.MostrarCatalogoServlet</servlet-class>
   </servlet>
    <servlet-mapping>
     <servlet-name>MostrarCatalogo</servlet-name>
     <url-pattern>/MostrarCatalogo</url-pattern>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping> -->
+    <url-pattern></url-pattern>
+  </servlet-mapping> 
 </web-app>
