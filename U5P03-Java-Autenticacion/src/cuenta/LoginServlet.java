@@ -1,7 +1,12 @@
 package cuenta;
+import modelo.Usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,29 +39,92 @@ public class LoginServlet extends HttpServlet {
 		ServletContext contexto = getServletContext();
 		String mensajeError = "";
 		// si ya había sesión con un valor de usuario válido
-		if (session != null) {
-			if ((session.getAttribute("login") != null)) { // L2
-				response.sendRedirect(contexto.getContextPath() + "/"); // L3
-			}
-		}
-		else { // no hay sesión iniciada
-			if (request.getMethod().equals("POST")) { // si venimos de enviar el formulario...
-              // Procesar los campos del formulario de login y password
-              // Declarar una variable de mensaje de error para mostrar después:
-			  // Comprobaciones que debes hacer:
-              // a. Error: el campo login no puede estar vacío 
-              // b. Error: el campo password no puede estar vacío
-              // c. Error: no se encuentra el usuario en la base de datos
-              // d. Error: la contraseña no es válida
-              // Si todo ha ido bien:
-              	// 1. Crear un objeto de la clase Usuario con los datos obtenidos de la BD
-				// 2. Crear una nueva sesión y avisarlo en un mensaje de log:
-              	session = request.getSession(); // en este caso sin "false" para que se cree
-				contexto.log(" * Creando sesión en " + request.getRequestURI());
-              	// 3. Añadir los atributos de sesión "login" y "usuario"
-              	// 4. Redirigir al contenido
-            }
-			// salida : L4
+		Connection conn = null;
+		Statement sentencia = null;
+		try {
+			// Paso 1: Cargar el driver JDBC.
+			Class.forName("org.mariadb.jdbc.Driver").newInstance();
+
+			// Paso 2: Conectarse a la Base de Datos utilizando la clase Connection
+			String userName = contexto.getInitParameter("usr_db_r");
+			String password = contexto.getInitParameter("psw_db_r");
+			String url = contexto.getInitParameter("srv_db")+"/catalogo11";
+			conn = DriverManager.getConnection(url, userName, password);
+
+			// Paso 3: Crear sentencias SQL, utilizando objetos de tipo Statement
+			sentencia = conn.createStatement();
+
+			if (session != null) {
+				if ((session.getAttribute("login") != null)) { // L2
+					response.sendRedirect(contexto.getContextPath() + "/"); // L3
+				}
+			} else { // no hay sesión iniciada
+				if (request.getMethod().equals("POST")) { // si venimos de enviar el formulario...
+					// Procesar los campos del formulario de login y password
+					// Declarar una variable de mensaje de error para mostrar después:
+					mensajeError = "";
+
+					// Comprobaciones que debes hacer:
+
+					// a. Error: el campo login no puede estar vacío
+					if (request.getParameter("login") == "") {
+						mensajeError = "Usuario vacio";
+					} else {
+						// b. Error: el campo password no puede estar vacío
+						if (request.getParameter("password") == "") {
+							mensajeError = "Contraseña vacia";
+						} else {
+							if (request.getParameter("login") != "") {
+
+								String consulta = "SELECT * FROM usuario where usuario.login LIKE '" + request.getParameter("username") + "'";
+								ResultSet rset = sentencia.executeQuery(consulta);
+								// c. Error: no se encuentra el usuario en la base de datos
+								if (!rset.isBeforeFirst()) {
+									mensajeError = "Usuario no valido";
+									// d. Error: la contraseña no es válida
+								} else {
+									rset.next();
+
+									if (!rset.getString("password").equals(request.getParameter("password"))) {
+										mensajeError = "Contraseña no valida";
+									} else {
+										String login = rset.getString("login");
+										String pas = rset.getString("password");
+										String nombre = rset.getString("nombre");
+										int admin = rset.getInt("admin");
+										String descripcion = rset.getString("descripcion");
+										if (admin == 1) {
+											session = request.getSession(); // en este caso sin "false" para que se cree
+
+											Usuario user = new Usuario(login, pas, nombre,true, descripcion );
+											session.setAttribute("usuario", user);
+											contexto.log(" * Creando sesión en " + request.getRequestURI());
+											response.sendRedirect(contexto.getContextPath() + "/");
+
+										} else {
+											session = request.getSession(); // en este caso sin "false" para que se cree
+
+											Usuario user = new Usuario(login, pas, nombre, false,descripcion );
+											session.setAttribute("usuario", user);
+											contexto.log(" * Creando sesión en " + request.getRequestURI());
+											response.sendRedirect(contexto.getContextPath() + "/");
+
+										}
+									}
+
+								}
+							}
+						}
+						// Si todo ha ido bien:
+						// 1. Crear un objeto de la clase Usuario con los datos obtenidos de la BD
+						// 2. Crear una nueva sesión y avisarlo en un mensaje de log:
+
+						// 3. Añadir los atributos de sesión "login" y "usuario"
+						// 4. Redirigir al contenido
+					}
+					// salida : L4
+
+				}
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html;UTF-8");
 			out.println("<html><head><meta charset='UTF-8'/>" 
@@ -71,8 +139,19 @@ public class LoginServlet extends HttpServlet {
 					+ contexto.getContextPath() + "/Alta'>¿Aún no estás registrado? Haz clic en este enlace</a></p>"
 					+ "<h3>" + mensajeError + "</h3>");
 			out.println("</body></html>");
+			}
+		  // Paso 6: Desconexión
+		  if (sentencia != null)
+			    sentencia.close();
+			  if (conn != null)
+			    conn.close();
+		} catch (Exception e) {
+			 e.printStackTrace();
 		}
-	}
+		
+		}
+		
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
