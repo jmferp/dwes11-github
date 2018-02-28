@@ -36,6 +36,18 @@ public class Usuario {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	@Override
+	public String toString() {
+		if(admin) {
+			return "<p><ul><li>login:" + login + "</li><li> password: " + password + "</li><li> nombre: " + nombre + "</li><li> descripcion: "
+					+ descripcion + "</li><li> administrador: si </li></p></ul>";
+		}else {
+			return "<p><ul><li>login:" + login + "</li><li> password: " + password + "</li><li> nombre: " + nombre + "</li><li> descripcion: "
+					+ descripcion + "</li><li> administrador: no </li></p></ul>";
+		}
+	}
+	
 	public Usuario(String login, String password, String nombre, boolean admin, String descripcion) {
 		super();
 		this.login = login;

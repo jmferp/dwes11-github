@@ -37,6 +37,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false); // L1
 		ServletContext contexto = getServletContext();
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html;UTF-8");
 		String mensajeError = "";
 		// si ya había sesión con un valor de usuario válido
 		Connection conn = null;
@@ -98,7 +100,7 @@ public class LoginServlet extends HttpServlet {
 
 											Usuario user = new Usuario(login, pas, nombre,true, descripcion );
 											session.setAttribute("usuario", user);
-											contexto.log(" * Creando sesión en " + request.getRequestURI());
+											contexto.log("Crear sesion " + request.getRequestURI());
 											response.sendRedirect(contexto.getContextPath() + "/");
 
 										} else {
@@ -106,7 +108,7 @@ public class LoginServlet extends HttpServlet {
 
 											Usuario user = new Usuario(login, pas, nombre, false,descripcion );
 											session.setAttribute("usuario", user);
-											contexto.log(" * Creando sesión en " + request.getRequestURI());
+											contexto.log("Crear sesion " + request.getRequestURI());
 											response.sendRedirect(contexto.getContextPath() + "/");
 
 										}
@@ -125,11 +127,10 @@ public class LoginServlet extends HttpServlet {
 					// salida : L4
 
 				}
-			PrintWriter out = response.getWriter();
-			response.setContentType("text/html;UTF-8");
+			
 			out.println("<html><head><meta charset='UTF-8'/>" 
                         + "<style> .error {color: red}</style>"
-                        + "<title>Catálogo de Nombre Apellidos</title></head><body>");
+                        + "<title>Catálogo de Jose Maria Fernandez</title></head><body>");
 			out.println("<h3>Inicio de sesión</h3>");
 			out.println("<form action='" + request.getRequestURI() + "' method='post'>"
 					+ "<label>Usuario:</label><input type='text' name='username'><br/>"
@@ -138,17 +139,15 @@ public class LoginServlet extends HttpServlet {
                     + "</form>" + "<p><a href='"
 					+ contexto.getContextPath() + "/Alta'>¿Aún no estás registrado? Haz clic en este enlace</a></p>"
 					+ "<h3>" + mensajeError + "</h3>");
-			out.println("</body></html>");
+			
 			}
-		  // Paso 6: Desconexión
-		  if (sentencia != null)
-			    sentencia.close();
-			  if (conn != null)
-			    conn.close();
-		} catch (Exception e) {
+		 
+		 
+			} catch (Exception e) {
 			 e.printStackTrace();
-		}
+			}
 		
+		out.println("</body></html>");
 		}
 		
 	

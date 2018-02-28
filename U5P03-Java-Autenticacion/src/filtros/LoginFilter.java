@@ -4,10 +4,14 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class LoginFilter
@@ -32,12 +36,31 @@ public class LoginFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req; // L1
+		HttpServletResponse response = (HttpServletResponse) res; // L1
+		ServletContext contexto = request.getServletContext(); 
+		String uri = request.getRequestURI();
+		HttpSession session = request.getSession(false); // si no existe no la creamos, era para saber si existia// L2
+		String errorSesion = ""; // L3
+		// comprobamos posibles errores:
+	  	// a. Aviso: intento de acceso sin sesión iniciada
+	  	// b. Aviso: existe sesión iniciada pero no contiene usuario
+	  	// c. Aviso: existe sesión iniciada pero el usuario no existe en la base de datos
+		if (session == null) {
+			errorSesion="No hay sesion iniciada";//a
+		} else {
+			if (session.getAttribute("usuario") == null) {
+				errorSesion="Sesion iniciada, pero no contiene usuario";//b
+			}
+		}
+		// redirigir en caso de error, salvo en excepciones
+		if( !errorSesion.isEmpty() && !(uri.endsWith("html") || uri.endsWith("Login") || uri.endsWith("Alta"))){ // L4
+			contexto.log(errorSesion + " - " + uri);
+			response.sendRedirect(contexto.getContextPath()+"/Login");
+		}else{
+			chain.doFilter(request, response);
+		}
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package servlets;
 
 import modelo.Obra;
+import modelo.Usuario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -95,7 +97,12 @@ public class MostrarObraServlet extends HttpServlet {
 	
 		out.print("<a href=MostrarCatalogo>Eliminar filtros<br>");
 
+		HttpSession session = request.getSession();
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		out.println("<h4>Sesión iniciada como <a href='"+request.getRequestURI()+"Cuenta'>" 
+			+ usuario.getNombre() + "</a></h4>");
 		out.println("</body></html>");
+		
 	}
 
 	/**

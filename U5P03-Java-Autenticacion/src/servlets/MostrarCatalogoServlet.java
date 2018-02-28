@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class MostrarCatalogo
@@ -159,11 +160,18 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		    sentencia.close();
 		  if (conn != null)
 		    conn.close();
-		} catch (Exception e) {
-		  e.printStackTrace();
-		}
+		
 	
 		out.print("<a href=MostrarCatalogo>Eliminar filtros");
+		
+		HttpSession session = request.getSession();
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		out.println("<h4>Sesión iniciada como <a href='"+request.getRequestURI()+"Cuenta'>" 
+			+ usuario.getNombre() + "</a></h4>");
+		
+			} catch (Exception e) {
+			  e.printStackTrace();
+			}
 		out.println("</body></html>");
 		
 	}

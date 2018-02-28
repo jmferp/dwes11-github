@@ -1,11 +1,17 @@
 package cuenta;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import modelo.Usuario;
 
 /**
  * Servlet implementation class CuentaServlet
@@ -26,8 +32,17 @@ public class CuentaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession(false);
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		ServletContext contexto = request.getServletContext();
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/html;UTF-8");
+		
+		out.println(usuario.toString());
+		out.println("<p><a href='"+contexto.getContextPath()+"/Logout'>Cerrar sesion</a></p>");
+		out.println("<p><a href='"+contexto.getContextPath()+"/Baja'>Baja de cuenta</a></p>");
+		out.println("<p><a href='"+request.getHeader("Referer")+"'>Volver</a></p>");
+		out.println("</body></html>");
 	}
 
 	/**
