@@ -91,7 +91,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		  
 		  if(request.getParameter("titulo")!=null) {
 			  String tit=request.getParameter("titulo");
-			  String consulta2 = "SELECT * from obra,autor WHERE obra.id_autor=autor.id AND obra.titulo LIKE '%"+tit+"%'";
+			  String consulta2 = "SELECT * from obra,autor WHERE obra.id_autor=autor.id AND (obra.titulo LIKE '%"+tit+"%' || autor.nombre LIKE '%"+tit+"%')";
 			  ResultSet rset2 = sentencia.executeQuery(consulta2);
 			  
 			  if (!rset2.isBeforeFirst() ) {    
@@ -166,7 +166,7 @@ public class MostrarCatalogoServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
-		out.println("<h4>Sesión iniciada como <a href='"+request.getRequestURI()+"Cuenta'>" 
+		out.println("<h4>Sesión iniciada como <a href='"+contexto.getContextPath()+"/Cuenta'>" 
 			+ usuario.getNombre() + "</a></h4>");
 		
 			} catch (Exception e) {
