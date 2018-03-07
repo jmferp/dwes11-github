@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,12 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.Producto;
 import modelo.Usuario;
 
 /**
  * Servlet implementation class CompraServlet
  */
-@WebServlet("/CompraServlet")
+@WebServlet("/Compra")
 public class CompraServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -63,6 +65,10 @@ public class CompraServlet extends HttpServlet {
 			out.println("<h4>Sesión iniciada como <a href='"+contexto.getContextPath()+"/Cuenta'>" 
 				+ usuario.getNombre() + "</a></h4>");
 			
+			ArrayList<Producto> listprod= (ArrayList<Producto>) session.getAttribute("carrito");
+			for(int i=0;i<listprod.size();i++) {
+				out.println("<p>"+listprod.get(i).getIdproducto()+"</p>");
+			}
 			
 			
 			

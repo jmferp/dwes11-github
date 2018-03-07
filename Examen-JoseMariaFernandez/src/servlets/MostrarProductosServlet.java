@@ -22,7 +22,7 @@ import modelo.Usuario;
 /**
  * Servlet implementation class MostrarProductosServlet
  */
-@WebServlet("/MostrarProductos")
+//@WebServlet("/MostrarProductos")
 public class MostrarProductosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -99,7 +99,7 @@ public class MostrarProductosServlet extends HttpServlet {
 					out.println("<tr style='background-color:orange'>");
 				    out.println("<td><a href=MostrarDetalles?idproducto='"+prod.getIdproducto()+"'>"+prod.getNombre()+"</td><td>"+prod.getMarca() + "</td><td><img src='./img/"+prod.getImagen()+"' width=100 heigh=100></td>");
 				    if(prod.getStock()>0) {
-				    	out.println("<td><a href=AnadirCesta?idproducto='\"+prod.getIdproducto()+\"'><img src=./img/carrito1.png width=40px></td>");
+				    	out.println("<td><a href=AnadirCesta?idproducto='"+prod.getIdproducto()+"'><img src=./img/carrito1.png width=40px></td>");
 				    }else{
 				    	out.println("<td></td>");
 				    }
@@ -129,7 +129,7 @@ public class MostrarProductosServlet extends HttpServlet {
 					out.println("<tr style='background-color:orange'>");
 				    out.println("<td><a href=MostrarDetalles?idproducto='"+prod.getIdproducto()+"'>"+prod.getNombre()+"</td><td>"+prod.getMarca() + "</td><td><img src='./img/"+prod.getImagen()+"' width=100 heigh=100></td>");
 				    if(prod.getStock()>0) {
-				    	out.println("<td><a href=AnadirCesta?idproducto='\"+prod.getIdproducto()+\"'><img src=./img/carrito1.png width=40px></td>");
+				    	out.println("<td><a href=AnadirCesta?idproducto='"+prod.getIdproducto()+"'><img src=./img/carrito1.png width=40px></td>");
 				    }else{
 				    	out.println("<td></td>");
 				    }
@@ -160,7 +160,7 @@ public class MostrarProductosServlet extends HttpServlet {
 					out.println("<tr style='background-color:orange'>");
 				    out.println("<td><a href=MostrarDetalles?idproducto='"+prod.getIdproducto()+"'>"+prod.getNombre()+"</td><td>"+prod.getMarca() + "</td><td><img src='./img/"+prod.getImagen()+"' width=100 heigh=100></td>");
 				    if(prod.getStock()>0) {
-				    	out.println("<td><a href=AnadirCesta?idproducto='\"+prod.getIdproducto()+\"'><img src=./img/carrito1.png width=40px></td>");
+				    	out.println("<td><a href=AnadirCesta?idproducto='"+prod.getIdproducto()+"'><img src=./img/carrito1.png width=40px></td>");
 				    }else{
 				    	out.println("<td></td>");
 				    }
@@ -176,7 +176,7 @@ public class MostrarProductosServlet extends HttpServlet {
 					    out.println("<h3>No hay resultados</p>");
 					}
 				  while (rset.next()) {
-					  out.println("<a href=MostrarProductos?familia='"+rset.getString("familia")+"'>"+rset.getString("familia")+"</a>");
+					  out.println("<a href=\"MostrarProductos?familia='"+rset.getString("familia")+"'\">"+rset.getString("familia")+"</a>");
 				  }
 				  
 				  String consulta1 = "SELECT * from producto WHERE producto.familia='Bio' "+order;

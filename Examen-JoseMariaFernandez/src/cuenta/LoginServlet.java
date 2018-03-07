@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			sentencia = conn.createStatement();
 
 			if (session != null) {
-				if ((session.getAttribute("login") != null)) {
+				if ((session.getAttribute("usuario") != null)) {
 					response.sendRedirect(contexto.getContextPath() + "/MostrarProductos"); 
 				}
 			} else { 

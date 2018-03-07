@@ -2,6 +2,7 @@ package cuenta;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -41,9 +42,14 @@ public class CuentaServlet extends HttpServlet {
 		
 		out.println(usuario.toString());
 		
-		Producto prod= (Producto) session.getAttribute("carrito");
+		ArrayList<Producto> listprod= (ArrayList<Producto>) session.getAttribute("carrito");
+		double sum=0;;
 		out.println("<p>Precio total</p>");
-		out.println("<p>"+prod.getPrecio()+"</p>");
+		for(int i=0;i<listprod.size();i++) {
+			sum=listprod.get(i).getPrecio()+sum;
+			
+		}
+		out.println("<p>"+sum+"</p>");
 		
 		out.println("<p><a href='"+contexto.getContextPath()+"/Logout'>Cerrar sesion</a></p>");
 		out.println("<p><a href='"+contexto.getContextPath()+"/Compra'>Compra</a></p>");
